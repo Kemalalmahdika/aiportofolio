@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "aiporto.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "aiporto.py"
+      }
+    ]
+  }
