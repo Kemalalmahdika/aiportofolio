@@ -39,8 +39,14 @@ def chat_with_gemini():
         return jsonify({"reply": response.text})
         
     except Exception as e:
-        print("Error:", e)
-        return jsonify({"error": str(e)}), 500
+        error_msg = str(e)
+        print("Error System:", error_msg) # Tetap di-print agar tercatat di log Vercel
+        
+        # Mengubah pesan error 503 menjadi balasan chat yang ramah
+        if "503" in error_msg or "UNAVAILABLE" in error_msg:
+            return jsonify({"reply": "Waduh, server AI Google sedang kelebihan beban saat ini. Mohon tunggu beberapa detik dan coba kirim lagi, ya!"})
+        else:
+            return jsonify({"reply": "Maaf, sedang ada gangguan teknis pada sistem AI. Silakan coba lagi nanti."})
 
 if __name__ == '__main__':
     # Server Python akan berjalan di port 5000
